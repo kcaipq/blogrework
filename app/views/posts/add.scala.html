@@ -1,0 +1,9 @@
+@(id: PostId, form: Form[PostContent])(implicit context: ViewContext)
+
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
+
+
+@main("New blog post") {
+  @postContentForm(label = "Add", action = routes.PostsController.add(id), form = form)
+}

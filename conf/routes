@@ -1,0 +1,36 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index
+
+# Blog posts
+GET     /posts                      controllers.Default.redirect(to="/posts/")
+GET     /posts/                     controllers.PostsController.index
+GET     /posts/new                  controllers.PostsController.showAdd
+POST    /posts/:id/add              controllers.PostsController.add(id: PostId)
+GET     /posts/:id/edit             controllers.PostsController.showEdit(id: PostId)
+POST    /posts/:id/edit             controllers.PostsController.edit(id: PostId, r: StreamRevision)
+POST    /posts/:id/delete           controllers.PostsController.delete(id: PostId, r: StreamRevision)
+GET     /posts/:id                  controllers.PostsController.show(id: PostId)
+
+POST    /posts/:postId/comments/                   controllers.PostsController.addComment(postId: PostId, r: StreamRevision)
+POST    /posts/:postId/comments/:commentId/delete  controllers.PostsController.deleteComment(postId: PostId, r: StreamRevision, commentId: CommentId)
+
+# Users
+GET     /log-in                     controllers.UsersController.showLogIn
+POST    /log-in                     controllers.UsersController.logIn
+GET     /logged-in                  controllers.UsersController.loggedIn
+GET     /log-out                    controllers.UsersController.logOut
+GET     /logged-out                 controllers.UsersController.loggedOut
+GET     /register                   controllers.UsersController.showRegister
+POST    /register                   controllers.UsersController.register
+GET     /registered                 controllers.UsersController.registered
+GET     /profile                    controllers.UsersController.showProfile
+POST    /profile                    controllers.UsersController.changeProfile
+POST    /profile/email              controllers.UsersController.changeEmailAddress
+POST    /profile/password           controllers.UsersController.changePassword
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)

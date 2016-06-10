@@ -1,0 +1,37 @@
+@(posts: Seq[Post], conflicts: Seq[PostEvent] = Nil)(implicit context: ViewContext with UsersContext)
+
+@main("Blog Posts") {
+  @conflictsMessagePanel(conflicts)
+
+  <table class="table table-striped">
+    <thead>
+      <tr><th>Title</th><th>Author</th><th>Content</th><th>&nbsp;</th></tr>
+    </thead>
+    <tbody>
+      @for(post <- posts) {
+        <tr>
+          <td>@post.content.title</td>
+          <td>@post.author.displayName</td>
+          <td>@post.content.body.take(100)</td>
+          <td>
+            <form class="form-inline input-prepend" action="@routes.PostsController.delete(post.id, post.revision)" method="POST">
+              <fieldset class="btn-group">
+              <a class="btn" href="@routes.PostsController.show(post.id)">Show</a>
+              @if(context.currentUser.canEditPost(post)) {
+                <a class="btn" href="@routes.PostsController.showEdit(post.id)">Edit</a>
+              }
+              @if(context.currentUser.canDeletePost(post)) {
+                <button class="btn">Delete</button>
+              }
+              </fieldset>
+            </form>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  @if(context.currentUser.canAddPost) {
+    <a class="btn" href="@routes.PostsController.showAdd">New Post</a>
+  }
+}

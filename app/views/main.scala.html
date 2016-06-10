@@ -1,0 +1,45 @@
+@(title: String)(content: Html)(implicit context: ViewContext)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap/bootstrap.min.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="@routes.Application.index">Play! Blog</a>
+                    <ul class="nav">
+                        <li><a href="@routes.PostsController.index">Posts</a></li>
+                    </ul>
+                    <ul class="nav pull-right">@context.currentUser.registered.map { user =>
+                        <li><a href="@routes.UsersController.showProfile">Welcome, @user.displayName</a></li>
+                        <li><a href="@routes.UsersController.logOut">Log out</a></li>
+                      }.getOrElse {
+                        <li><a href="@routes.UsersController.showLogIn">Log in</a></li>
+                        <li><a href="@routes.UsersController.showRegister">Register</a></li>
+                      }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+        @flash()
+        <div class="page-header">
+        <h1>@title</h1>
+        </div>
+        @content
+        </div>
+        <script>
+        $(function() {
+          $(".alert").alert();
+        });
+        </script>
+    </body>
+</html>

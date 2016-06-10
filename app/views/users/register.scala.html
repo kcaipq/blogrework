@@ -1,0 +1,21 @@
+@(form: Form[(EmailAddress, String, Password)], conflicts: Seq[UserEvent] = Nil)(implicit context: ViewContext)
+@import views.support._
+  @import play.api.Play.current
+  @import play.api.i18n.Messages.Implicits._
+
+@main("Register") {
+  @helper.form(action = routes.UsersController.register) {
+    @globalErrorsPanel(form)
+    <fieldset>
+      @helper.inputText(form("email"), '_label -> Messages("email"), 'autofocus -> "autofocus", 'required -> "required")
+      @helper.inputText(form("displayName"), '_label -> Messages("displayName"), 'required -> "required")
+      @helper.inputPassword(form("password")("1"), '_label -> Messages("password.1"), 'required -> "required")
+      @helper.inputPassword(form("password")("2"), '_label -> Messages("password.2"), 'required -> "required")
+    </fieldset>
+
+    <fieldset>
+      <button class="btn btn-primary">Register</button>
+      <a class="btn" href="@routes.PostsController.index()">Cancel</a>
+    </fieldset>
+  }
+}

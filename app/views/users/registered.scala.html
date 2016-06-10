@@ -1,0 +1,6 @@
+@()(implicit context: ViewContext)
+@import views.support._
+
+@main("Thanks for registering!") {
+  <p>Your account has been registered. You can now <a href="@routes.UsersController.showLogIn">log in</a>.</p>
+}

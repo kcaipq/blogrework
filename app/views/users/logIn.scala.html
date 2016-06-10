@@ -1,0 +1,16 @@
+@(form: Form[_])(implicit context: ViewContext)
+@import views.support._
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
+@main("Log in") {
+  @helper.form(action = routes.UsersController.logIn) {
+    @globalErrorsPanel(form)
+    <fieldset>
+      @helper.inputText(form("email"), '_label -> Messages("email"), 'autofocus -> "autofocus", 'required -> "required")
+      @helper.inputPassword(form("password"), '_label -> Messages("password"), 'required -> "required")
+    </fieldset>
+    <fieldset>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </fieldset>
+  }
+}
